@@ -1,0 +1,32 @@
+package pruebacup;
+
+import java_cup.runtime.*;
+parser code {:
+public void syntax_error(Symbol s) {
+  System.out.println("Error de sintaxis en linea " + s.left);
+  report_error("Error de sintaxis en linea " + s.left, null);
+}
+
+public void unrecovered_syntax_error(Symbol s) throws
+  java.lang.Exception {
+  report_fatal_error("", null);
+}
+:};
+
+terminal metodo, imprime, principal, args, operacion, entero, decimal,entrada,igual,lectura,mensage;
+terminal llave_abre,llave_cierra,punto_coma,coma, Cabre, Ccierra, Pabre,Pcierra,signo;
+
+non terminal listavar,var,num,imp,dec,ent,mas,sig,mensaje,ope,un,otra,nu;
+non terminal numero,tipo,nombre,otro,es,sg,instrucciones,lec,declara,prin;
+
+start with prin;
+
+prin::= metodo principal Pabre args Cabre Ccierra Pcierra llave_abre instrucciones llave_cierra;
+instrucciones::= lec | lec instrucciones | declara | declara instrucciones |ope | ope instrucciones | imp | imp instrucciones;
+lec::= lectura nombre igual mensage;
+declara::= tipo listavar;
+tipo::= entero | decimal;
+listavar::=nombre | nombre igual var| nombre coma listavar|nombre igual var coma listavar;
+ope::=operacion  nombre igual es sg;
+imp::= imprime mensage coma nombre punto_coma|imprime mensage punto_coma | imprime nombre;
+
